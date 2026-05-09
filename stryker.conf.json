@@ -1,0 +1,13 @@
+{
+  "$schema": "./node_modules/@stryker-mutator/core/schema/stryker-schema.json",
+  "testRunner": "jest",
+  "mutate": ["src/budget.js"],
+  "reporters": ["html", "clear-text", "progress"],
+  "coverageAnalysis": "perTest",
+  "jest": {
+    "projectType": "custom",
+    "config": {
+      "testEnvironment": "node"
+    }
+  }
+}
