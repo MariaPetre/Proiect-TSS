@@ -13,7 +13,6 @@
     if (typeof crypto !== "undefined" && crypto.randomUUID) {
       return crypto.randomUUID();
     }
-    return String(Date.now());
   }
 
   function toMoney(value) {
@@ -40,10 +39,9 @@
 
   function validateTransaction(input) {
     const numericAmount = Number(input.amount);
-    const trimmedDescription = String(input.description || "").trim();
+    const trimmedDescription = String(input.description).trim();
     const selectedDate = new Date(input.date);
     const today = new Date();
-    today.setHours(23, 59, 59, 999);
 
     if (trimmedDescription.length < 3) {
       return {
@@ -84,7 +82,7 @@
     }
 
     if (selectedDate > today) {
-      return { valid: false, message: "Data nu poate fi în viitor" };
+      return { valid: false, message: "Data nu poate fi in viitor" };
     }
 
     return {
