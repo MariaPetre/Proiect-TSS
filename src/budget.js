@@ -48,14 +48,14 @@
     if (trimmedDescription.length < 3) {
       return {
         valid: false,
-        message: "Minim 3 caractere.",
+        message: "Minim 3 caractere",
       };
     }
 
     if (trimmedDescription.length > 60) {
       return {
         valid: false,
-        message: "Maxim 60 caractere.",
+        message: "Maxim 60 caractere",
       };
     }
 

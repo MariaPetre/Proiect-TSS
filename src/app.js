@@ -66,7 +66,7 @@
           <small>${transaction.category} · ${transaction.date}</small>
         </div>
         <strong class="amount ${transaction.type}">${transaction.type === "income" ? "+" : "-"}${budgetService.toMoney(transaction.amount)}</strong>
-        <button class="delete-btn" data-id="${transaction.id}" aria-label="Șterge tranzacția">Șterge</button>
+        <button class="delete-btn" data-id="${transaction.id}" aria-label="Sterge">Sterge tranzactia</button>
       `;
       elements.transactionList.appendChild(item);
     });
