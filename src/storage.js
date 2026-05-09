@@ -1,5 +1,5 @@
 (function (root) {
-  const STORAGE_KEY = 'expense-budget-tracker-state';
+  const STORAGE_KEY = "expense-budget-tracker-state";
 
   function getDefaultState() {
     return { budget: 0, transactions: [] };

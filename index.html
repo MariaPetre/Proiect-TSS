@@ -10,58 +10,83 @@
     <main class="app">
       <section class="hero">
         <div>
-          <p class="eyebrow">Vanilla JS Project</p>
           <h1>Expense / Budget Tracker</h1>
-          <p>Gestionează venituri, cheltuieli, buget lunar și filtrează tranzacțiile.</p>
+          <p>
+            Gestionare buget.
+          </p>
         </div>
         <button id="clear-all" class="danger secondary">Șterge tot</button>
       </section>
 
       <section class="cards">
-        <article class="card"><span>Venituri</span><strong id="income-total">0 RON</strong></article>
-        <article class="card"><span>Cheltuieli</span><strong id="expense-total">0 RON</strong></article>
-        <article class="card"><span>Sold</span><strong id="balance-total">0 RON</strong></article>
-        <article class="card"><span>Buget rămas</span><strong id="budget-left">0 RON</strong></article>
+        <article class="card">
+          <span>Venituri</span><strong id="income-total">0 RON</strong>
+        </article>
+        <article class="card">
+          <span>Cheltuieli</span><strong id="expense-total">0 RON</strong>
+        </article>
+        <article class="card">
+          <span>Sold</span><strong id="balance-total">0 RON</strong>
+        </article>
+        <article class="card">
+          <span>Buget ramas</span><strong id="budget-left">0 RON</strong>
+        </article>
       </section>
 
       <section class="grid">
         <form id="budget-form" class="panel">
           <h2>Buget lunar</h2>
           <label for="monthly-budget">Suma bugetului</label>
-          <input id="monthly-budget" type="number" min="0" step="0.01" placeholder="ex. 2500" />
-          <button type="submit">Setează buget</button>
+          <input
+            id="monthly-budget"
+            type="number"
+            min="0"
+            step="0.01"
+            placeholder="ex. 2500"
+          />
+          <button type="submit">Adauga buget</button>
           <p id="budget-error" class="error"></p>
         </form>
 
         <form id="transaction-form" class="panel">
-          <h2>Adaugă tranzacție</h2>
+          <h2>Adauga o tranzactie noua</h2>
 
           <label for="description">Descriere</label>
-          <input id="description" maxlength="60" placeholder="ex. salariu, chirie, cafea" />
+          <input
+            id="description"
+            maxlength="60"
+            placeholder="ex. salariu, chirie, cafea"
+          />
 
-          <label for="amount">Sumă</label>
-          <input id="amount" type="number" min="0.01" step="0.01" placeholder="ex. 120.50" />
+          <label for="amount">Suma</label>
+          <input
+            id="amount"
+            type="number"
+            min="0.01"
+            step="0.01"
+            placeholder="ex. 120.50"
+          />
 
           <label for="type">Tip</label>
           <select id="type">
             <option value="income">Venit</option>
-            <option value="expense">Cheltuială</option>
+            <option value="expense">Cheltuiala</option>
           </select>
 
           <label for="category">Categorie</label>
           <select id="category">
             <option value="salary">Salariu</option>
-            <option value="food">Mâncare</option>
+            <option value="food">Hrana</option>
             <option value="rent">Chirie</option>
             <option value="transport">Transport</option>
-            <option value="health">Sănătate</option>
+            <option value="health">Sanatate</option>
             <option value="other">Altele</option>
           </select>
 
-          <label for="date">Dată</label>
+          <label for="date">Data</label>
           <input id="date" type="date" />
 
-          <button type="submit">Adaugă</button>
+          <button type="submit">Adauga</button>
           <p id="transaction-error" class="error"></p>
         </form>
       </section>
@@ -79,17 +104,17 @@
             <select id="filter-category">
               <option value="all">Toate categoriile</option>
               <option value="salary">Salariu</option>
-              <option value="food">Mâncare</option>
+              <option value="food">Hrana</option>
               <option value="rent">Chirie</option>
               <option value="transport">Transport</option>
-              <option value="health">Sănătate</option>
+              <option value="health">Sanatate</option>
               <option value="other">Altele</option>
             </select>
           </div>
         </div>
 
         <ul id="transaction-list" class="transactions"></ul>
-        <p id="empty-state" class="empty">Nu există tranzacții.</p>
+        <p id="empty-state" class="empty">Nu ai nicio tranzactie adaugata.</p>
       </section>
     </main>
 

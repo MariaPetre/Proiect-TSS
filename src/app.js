@@ -4,30 +4,30 @@
   const state = storageService.loadState();
 
   const elements = {
-    budgetForm: document.querySelector('#budget-form'),
-    monthlyBudget: document.querySelector('#monthly-budget'),
-    budgetError: document.querySelector('#budget-error'),
-    transactionForm: document.querySelector('#transaction-form'),
-    description: document.querySelector('#description'),
-    amount: document.querySelector('#amount'),
-    type: document.querySelector('#type'),
-    category: document.querySelector('#category'),
-    date: document.querySelector('#date'),
-    transactionError: document.querySelector('#transaction-error'),
-    incomeTotal: document.querySelector('#income-total'),
-    expenseTotal: document.querySelector('#expense-total'),
-    balanceTotal: document.querySelector('#balance-total'),
-    budgetLeft: document.querySelector('#budget-left'),
-    transactionList: document.querySelector('#transaction-list'),
-    emptyState: document.querySelector('#empty-state'),
-    search: document.querySelector('#search'),
-    filterType: document.querySelector('#filter-type'),
-    filterCategory: document.querySelector('#filter-category'),
-    clearAll: document.querySelector('#clear-all'),
+    budgetForm: document.querySelector("#budget-form"),
+    monthlyBudget: document.querySelector("#monthly-budget"),
+    budgetError: document.querySelector("#budget-error"),
+    transactionForm: document.querySelector("#transaction-form"),
+    description: document.querySelector("#description"),
+    amount: document.querySelector("#amount"),
+    type: document.querySelector("#type"),
+    category: document.querySelector("#category"),
+    date: document.querySelector("#date"),
+    transactionError: document.querySelector("#transaction-error"),
+    incomeTotal: document.querySelector("#income-total"),
+    expenseTotal: document.querySelector("#expense-total"),
+    balanceTotal: document.querySelector("#balance-total"),
+    budgetLeft: document.querySelector("#budget-left"),
+    transactionList: document.querySelector("#transaction-list"),
+    emptyState: document.querySelector("#empty-state"),
+    search: document.querySelector("#search"),
+    filterType: document.querySelector("#filter-type"),
+    filterCategory: document.querySelector("#filter-category"),
+    clearAll: document.querySelector("#clear-all"),
   };
 
   elements.date.valueAsDate = new Date();
-  elements.monthlyBudget.value = state.budget || '';
+  elements.monthlyBudget.value = state.budget || "";
 
   function persistAndRender() {
     storageService.saveState(state);
@@ -35,38 +35,44 @@
   }
 
   function render() {
-    const totals = budgetService.calculateTotals(state.transactions, state.budget);
+    const totals = budgetService.calculateTotals(
+      state.transactions,
+      state.budget,
+    );
 
     elements.incomeTotal.textContent = budgetService.toMoney(totals.income);
     elements.expenseTotal.textContent = budgetService.toMoney(totals.expenses);
     elements.balanceTotal.textContent = budgetService.toMoney(totals.balance);
     elements.budgetLeft.textContent = budgetService.toMoney(totals.budgetLeft);
 
-    const visibleTransactions = budgetService.filterTransactions(state.transactions, {
-      search: elements.search.value,
-      type: elements.filterType.value,
-      category: elements.filterCategory.value,
-    });
+    const visibleTransactions = budgetService.filterTransactions(
+      state.transactions,
+      {
+        search: elements.search.value,
+        type: elements.filterType.value,
+        category: elements.filterCategory.value,
+      },
+    );
 
-    elements.transactionList.innerHTML = '';
+    elements.transactionList.innerHTML = "";
     elements.emptyState.hidden = visibleTransactions.length > 0;
 
-    visibleTransactions.forEach(function (transaction) {
-      const item = document.createElement('li');
-      item.className = 'transaction';
+    visibleTransactions.forEach((transaction) => {
+      const item = document.createElement("li");
+      item.className = "transaction";
       item.innerHTML = `
         <div>
           <strong>${transaction.description}</strong><br />
           <small>${transaction.category} · ${transaction.date}</small>
         </div>
-        <strong class="amount ${transaction.type}">${transaction.type === 'income' ? '+' : '-'}${budgetService.toMoney(transaction.amount)}</strong>
+        <strong class="amount ${transaction.type}">${transaction.type === "income" ? "+" : "-"}${budgetService.toMoney(transaction.amount)}</strong>
         <button class="delete-btn" data-id="${transaction.id}" aria-label="Șterge tranzacția">Șterge</button>
       `;
       elements.transactionList.appendChild(item);
     });
   }
 
-  elements.budgetForm.addEventListener('submit', function (event) {
+  elements.budgetForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
     const result = budgetService.validateBudget(elements.monthlyBudget.value);
@@ -75,12 +81,12 @@
       return;
     }
 
-    elements.budgetError.textContent = '';
+    elements.budgetError.textContent = "";
     state.budget = result.amount;
     persistAndRender();
   });
 
-  elements.transactionForm.addEventListener('submit', function (event) {
+  elements.transactionForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
     const result = budgetService.validateTransaction({
@@ -96,18 +102,20 @@
       return;
     }
 
-    elements.transactionError.textContent = '';
+    elements.transactionError.textContent = "";
     state.transactions.push(result.transaction);
     elements.transactionForm.reset();
     elements.date.valueAsDate = new Date();
     persistAndRender();
   });
 
-  elements.transactionList.addEventListener('click', function (event) {
-    const button = event.target.closest('button[data-id]');
-    if (!button) return;
+  elements.transactionList.addEventListener("click", (event) => {
+    const button = event.target.closest("button[data-id]");
+    if (!button) {
+      return;
+    }
 
-    const index = state.transactions.findIndex(function (transaction) {
+    const index = state.transactions.findIndex((transaction) => {
       return transaction.id === button.dataset.id;
     });
 
@@ -117,16 +125,20 @@
     }
   });
 
-  [elements.search, elements.filterType, elements.filterCategory].forEach(function (element) {
-    element.addEventListener('input', render);
-  });
+  [elements.search, elements.filterType, elements.filterCategory].forEach(
+    (element) => {
+      element.addEventListener("input", render);
+    },
+  );
 
-  elements.clearAll.addEventListener('click', function () {
-    if (!confirm('Sigur vrei să ștergi toate datele?')) return;
+  elements.clearAll.addEventListener("click", () => {
+    if (!confirm("Vrei sa stergi datele?")) {
+      return;
+    }
 
     state.budget = 0;
     state.transactions = [];
-    elements.monthlyBudget.value = '';
+    elements.monthlyBudget.value = "";
     storageService.clearState();
     render();
   });
